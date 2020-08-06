@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Salama.Models.Admin>
+@using Salama.Models
+@{
+    ViewBag.Title = "المديرين";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool AdminType = new DB().Admins.Find(int.Parse(User.Identity.Name)).IsManager;
+}
+
+<h2>المديرين</h2>
+@if (AdminType)
+{
+    <p>
+        @Html.ActionLink("مدير جديد", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            اسم المدير
+        </th>
+        <th>
+            قائد ؟
+        </th>
+        <th></th>
+    </tr>
+
+    @if (AdminType)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsManager)
+                </td>
+                <td>
+                    @Html.ActionLink("تعديل", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("تفاصيل", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("حذف", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsManager)
+                </td>
+            </tr>
+        }
+    }
+
+
+</table>

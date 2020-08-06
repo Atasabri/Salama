@@ -1,0 +1,20 @@
+﻿@model Salama.Models.Photo
+
+@{
+    ViewBag.Title = "تفاصيل الصورة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تفاصيل الصورة</h2>
+
+<div>
+    <h4>الصورة</h4>
+    <img src="~/Uploads/Photos/@(Model.ID).jpg" alt="" width="200" height="200" />
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("العودة للصور", "Index")
+</p>

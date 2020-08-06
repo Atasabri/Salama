@@ -1,0 +1,49 @@
+﻿@model Salama.Models.Admin
+
+@{
+    ViewBag.Title = "حذف المدير";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف المدير</h2>
+
+<h3>هل انت متاكد انك تريد حذف هذا المدير</h3>
+<div>
+    <h4>تفاصيل المدير</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            كلمة المرور
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            هل هو قائد ؟
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsManager)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("العودة لصفحة المديرين", "Index")
+        </div>
+    }
+</div>

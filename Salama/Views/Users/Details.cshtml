@@ -1,0 +1,64 @@
+﻿@model Salama.Models.User
+
+@{
+    ViewBag.Title = "تفاصيل العميل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تفاصيل العميل</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            الهاتف
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            رقم السيارة
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Car_Num)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("العودة للعملاء", "Index")
+</p>
+<br />
+<br/>
+<h3>الطلبات</h3>
+<br />
+<table class="table">
+    <tr>
+        <td>
+            التاريخ
+        </td>
+        <td>
+            رقم العداد   
+        </td>
+    </tr>
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>@item.Date.ToShortDateString()</td>
+            <td>@item.C_Number</td>
+        </tr>
+    }
+</table>

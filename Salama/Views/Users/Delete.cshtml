@@ -1,0 +1,54 @@
+﻿@model Salama.Models.User
+
+@{
+    ViewBag.Title = "حذف العميل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف العميل</h2>
+
+<h3>هل انت متاكد من حذف هذا العميل</h3>
+<div>
+    <h4>تفاصيل العميل</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            رقم الهاتف
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            رقم السيارة
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Car_Num)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("العودة للعملاء", "Index")
+        </div>
+    }
+    
+    @if(ViewBag.error!=null)
+    {
+        <span style="color:red">@ViewBag.error</span>
+    }
+</div>

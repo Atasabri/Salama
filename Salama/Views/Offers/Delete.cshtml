@@ -1,0 +1,32 @@
+﻿@model Salama.Models.Offer
+
+@{
+    ViewBag.Title = "حذف العرض";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف العرض</h2>
+
+<h3>هل انت متاطد انك تريد مسح هذا العرض</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("العودة للعروض", "Index")
+        </div>
+    }
+</div>

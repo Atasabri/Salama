@@ -1,0 +1,71 @@
+﻿@model Salama.Models.Product
+
+@{
+    ViewBag.Title = "تفاصيل المنتج";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تفاصيل المنتج</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            الصورة
+        </dt>
+
+        <dd>
+            <img src="~/Uploads/Products/@(Model.ID).jpg" width="100" height="100" style="border-radius:50%" alt="" />
+        </dd>
+        <dt>
+            السعر
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            التفاصيل
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            عدد الكيلو مترات
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KMNumber)
+        </dd>
+
+        <dt>
+            الشركة المنتجة
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type.Name)
+        </dd>
+        <dt>
+            عدد المبيعات
+        </dt>
+        <dd>
+            @Model.Order_Details.Count
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("العودة للمنتجات", "Index")
+</p>

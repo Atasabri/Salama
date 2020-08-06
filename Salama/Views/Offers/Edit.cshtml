@@ -1,0 +1,44 @@
+﻿@model Salama.Models.Offer
+
+@{
+    ViewBag.Title = "تعديل العرض";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تعديل العرض</h2>
+
+@using (Html.BeginForm("Edit", "Offers", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Name, new { @class = "form-control",required= "required" } )
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("الصورة", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="File1" name="Photo" type="file" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="حفظ" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

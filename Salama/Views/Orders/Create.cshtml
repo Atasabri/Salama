@@ -1,0 +1,256 @@
+﻿@model Salama.Models.Order
+@using Salama.Models
+@{
+    ViewBag.Title = " انشاء طلب جديد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>انشاء طلب جديد</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>بيانات الطلب</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("التاريخ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="Text1" type="date" class="form-control" name="Date" required />
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("رقم العداد", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="Text1" name="C_Number" class="form-control" required type="text" />
+                 @Html.ValidationMessageFor(model => model.C_Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("رقم السيارة", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="number" name="Car_Num" required class="form-control" onblur="FindUser();" type="text" />
+                <label id="status"></label>
+            </div>
+        </div>
+         @Html.Hidden("ID")
+        <div class="form-group">
+            @Html.Label("اسم العميل", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="UserName" name="Name" required type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("الهاتف", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="Phone" name="Phone" required class="form-control" type="text" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("المنتجات", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="key" type="text" onkeyup="Search()" class="form-control" placeholder="Search By Name" />
+                @Html.DropDownList("Product_ID",new SelectList(new DB().Products,"ID","Name"),"اختار منتج",new {@class= "form-control" })
+                <input id="Btn" type="button" class="btn btn-danger" value="اضف" onclick="AddProduct();" />
+            </div>
+        </div>
+        <table id="DIV" class="table">
+
+        </table>
+
+
+        <div class="form-group">
+            @Html.Label("نوع الخدمة", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Service_ID", new SelectList(new DB().Services, "ID", "Name"), "اختار خدمة", new { @class = "form-control" })
+                <input id="Btn" type="button" class="btn btn-danger" value="اضف" onclick="AddService();" />
+            </div>
+        </div>
+        <table id="DIV1" class="table">
+        </table>
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="اضافة الطلب" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    if(ViewBag.Add!=null)
+    {
+        <span style="color:green">@ViewBag.Add</span>
+    }
+    if (ViewBag.error != null)
+    {
+        <span style="color:red">@ViewBag.error</span>
+    }
+}
+
+<div>
+    @Html.ActionLink("كل الطلبات", "Index")
+</div>
+
+<script>
+
+
+                          function FindUser() {
+
+                           $("#status").html("Checking...")
+
+
+                           $.post("@Url.Action("UserFind","Orders")", {
+
+                               number: $("#number").val()
+
+                       },
+                       function (data) {
+
+                           if (data != "nodata") {
+                               if ($("#number").val() != "") {
+                                   $("#status").html('<font color="Green">User Found </font>');
+                                   $("#UserName").val(data.Name);
+                                   $("#Phone").val(data.Phone);
+                                   $("#ID").val(data.ID);
+                                   $("#UserName").attr('readonly', true);
+                                   $("#Phone").attr('readonly', true);
+                                   $("#number").css("border-color", "Green");
+                               } else {
+                                   $("#status").html('<font color="red">User Not Found </font>');
+                                   $("#number").css("border-color", "red");
+                               }
+                           }
+                           else {
+                               $("#status").html('<font color="red">User Not Found </font>');
+                               $("#UserName").val("");
+                               $("#Phone").val("");
+                               $("#ID").val("");
+                               $("#UserName").attr('readonly', false);
+                               $("#Phone").attr('readonly', false);
+                               $("#number").css("border-color", "red");
+                           }
+                       }
+
+        )
+
+                       }
+
+
+</script>
+
+<script>
+
+
+    function AddProduct() {
+
+
+                           $.post("@Url.Action("AddProduct","Orders")", {
+
+                               Product_ID: $("#Product_ID").val()
+
+                       },
+                       function (data) {
+                           $("#DIV").append("<tr id='"+data.ID+"'> <td>"+
+                          "<span>" + data.Name + "</span></td><td><input id='Button' onclick='ProdDelete("+data.ID+");' type='button' value='حذف' /></td></tr>");
+                       }
+
+        )
+
+                       }
+
+
+</script>
+<script>
+
+
+    function AddService() {
+
+
+                           $.post("@Url.Action("AddService", "Orders")", {
+
+                               Service_ID: $("#Service_ID").val()
+
+                       },
+                       function (data) {
+                           $("#DIV1").append("<tr id='"+data.ID+"'> <td>" +
+                           "<span>" + data.Name + "</span></td><td><input id='Button' onclick='ServiceDelete("+data.ID+");' type='button' value='حذف' /></td></tr>");
+                       }
+
+        )
+
+                       }
+
+
+</script>
+
+<script>
+
+
+    function ProdDelete(id) {
+
+
+                           $.post("@Url.Action("ProdDelete", "Orders")", {
+
+                               Product_ID: id
+
+                       },
+                       function (data) {
+                           $("#DIV tr#"+data+"").remove();
+                       }
+
+        )
+
+                       }
+
+
+</script>
+<script>
+
+
+    function ServiceDelete(id) {
+
+
+                           $.post("@Url.Action("ServiceDelete", "Orders")", {
+
+                               Service_ID: id
+
+                       },
+                       function (data) {
+                           $("#DIV1 tr#"+data+"").remove();
+                       }
+
+        )
+
+                       }
+
+
+</script>
+<script>
+
+
+    function Search() {
+
+
+                           $.post("@Url.Action("Search", "Products")", {
+
+                               key: $("#key").val()
+
+                       },
+                       function (data) {
+                           $("#Product_ID").html('');
+                           $("#Product_ID").append('<option>اختار منتج</option>');
+                           for (var i = 0; i < data.length; i++) {
+                               $("#Product_ID").append('<option value="'+data[i].ID+'">'+data[i].Name+'</option>');
+                           }
+                       }
+
+        )
+
+                       }
+
+
+</script>

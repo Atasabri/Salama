@@ -1,0 +1,50 @@
+﻿@model Salama.Models.Admin
+
+@{
+    ViewBag.Title = "تسجيل الدخول";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تسجيل الدخول</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>هذه الصفحة خاصة فقط بالمديرين</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("اسم المدير", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("كلمة المرور", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control",@type="password", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="دخول" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    if(ViewBag.error!=null)
+    {
+        <span style="color:red">@ViewBag.error</span>
+    }
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

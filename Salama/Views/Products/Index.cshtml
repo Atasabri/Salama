@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Salama.Models.Product>
+@using Salama.Models
+@{
+    ViewBag.Title = "المنتجات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>المنتجات</h2>
+
+<p>
+    @Html.ActionLink("منتج جديد", "Create")
+</p>
+<br />
+<br />
+<input id="key" type="text" onkeyup="Search();" class="form-control" placeholder="Search By Name"/>
+<br />
+<br />
+@Html.DropDownList("Type_ID", new SelectList(new DB().Types, "ID", "Name"), "بحث باسم الشركة", new { @class = "form-control",@onchange= "SearchByTypeName();" })
+
+
+<br />
+<br />
+
+<table id="div" class="table">
+    <tr>
+        <th>
+            اسم المنتج
+        </th>
+        <th>
+            السعر
+        </th>
+        <th>
+            عدد الكيلو مترات
+        </th>
+        <th>
+            نوع المنتج
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+           
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KMNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type.Name)
+        </td>
+        <td>
+            @Html.ActionLink("تعديل", "Edit", new { id=item.ID }) <a href="~/Products/Edit/"></a> |
+            @Html.ActionLink("تفاصيل", "Details", new { id=item.ID }) |
+            @Html.ActionLink("حذف", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<script>
+
+
+    function Search() {
+
+
+                           $.post("@Url.Action("Search", "Products")", {
+
+                               key: $("#key").val()
+
+                       },
+                       function (data) {
+                           $("#div").html('');
+                           $("#div").append('tr><th>اسم المنتج</th> <th>  السعر </th><th> عدد الكيلو مترات</th><th> نوع المنتج</th><th></th></tr>');
+                           for (var i = 0; i < data.length; i++) {
+                               $("#div").append('<tr><td>' + data[i].Name + '</td><td>' + data[i].Price + '</td><td>' + data[i].KMNumber + '</td><td>' + data[i].TypeName + '</td><td><a href="~/Products/Edit/' + data[i].ID + '">تعديل</a> | <a href="~/Products/Details/' + data[i].ID + '">تفاصيل</a> | <a href="~/Products/Delete/' + data[i].ID + '">حذف</a></td> </tr>');
+                           }
+                       }
+
+        )
+
+                       }
+
+
+</script>
+<script>
+
+
+    function SearchByTypeName() {
+            $.post("@Url.Action("SearchByTypeName", "Products")", {
+
+            Type_ID: $("#Type_ID").val()
+
+        },
+        function (data) {
+            $("#div").html('');
+            $("#div").append('tr><th>اسم المنتج</th> <th>  السعر </th><th> عدد الكيلو مترات</th><th> نوع المنتج</th><th></th></tr>');
+            for (var i = 0; i < data.length; i++) {
+                $("#div").append('<tr><td>' + data[i].Name + '</td><td>' + data[i].Price + '</td><td>' + data[i].KMNumber + '</td><td>' + data[i].TypeName + '</td><td><a href="~/Products/Edit/' + data[i].ID + '">تعديل</a> | <a href="~/Products/Details/' + data[i].ID + '">تفاصيل</a> | <a href="~/Products/Delete/' + data[i].ID + '">حذف</a></td> </tr>');
+            }
+        }
+
+        )
+            
+
+                        
+                       }
+
+
+</script>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Salama.Models.Photo>
+
+@{
+    ViewBag.Title = "الصور";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>الصور</h2>
+
+<p>
+    @Html.ActionLink("اضافة صورة", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td><img src="~/Uploads/Photos/@(item.ID).jpg" alt="" width="60" height="60" style="border-radius:50%" /></td>
+        <td>
+            @Html.ActionLink("تعديل", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("تفاصيل", "Details", new { id=item.ID }) |
+            @Html.ActionLink("حذف", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

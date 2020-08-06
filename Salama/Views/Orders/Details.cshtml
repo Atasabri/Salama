@@ -1,0 +1,93 @@
+﻿@model Salama.Models.Order
+
+@{
+    ViewBag.Title = "تفاصيل الطلب";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تفاصيل الطلب</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            التاريخ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            رقم العداد
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C_Number)
+        </dd>
+
+        <dt>
+            اسم العميل
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt>
+           رقم الهاتف
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Phone)
+        </dd>
+        <dt>
+            رقم السيارة
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Car_Num)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("العودة للطلبات", "Index")
+</p>
+<br/><br />
+<h3>
+    المنتجات
+</h3>
+<br />
+<table class="table">
+    <tr>
+        <td>المنتج</td>
+    </tr>
+    @foreach (var item in Model.Order_Details)
+    {
+        <tr>
+            <td>
+                @item.Product.Name
+            </td>
+        </tr>
+    }
+
+</table>
+<h3>
+    الخدمات
+</h3>
+<br />
+<table class="table">
+    <tr>
+        <td>المنتج</td>
+    </tr>
+    @foreach (var item in Model.order_Service)
+    {
+        <tr>
+            <td>
+                @item.Service.Name
+            </td>
+        </tr>
+    }
+
+</table>

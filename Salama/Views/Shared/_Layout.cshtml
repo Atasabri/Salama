@@ -1,0 +1,96 @@
+﻿@using Salama.Models
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .agile_short_dropdown {
+            border-radius: 0;
+            background: #ffffff;
+            text-align: center;
+            padding: 0;
+            border: none;
+        }
+
+            .agile_short_dropdown li a {
+                text-transform: uppercase;
+                color: #212121;
+                font-size: 20px;
+                font-weight: 500;
+                padding: .8em 0;
+                border-bottom: 1px solid #ececef;
+            }
+
+            .agile_short_dropdown > li > a:hover {
+                color: #212121;
+                text-decoration: none;
+                background-color: #0094ff;
+            }
+
+        .navbar-nav .open .dropdown-menu {
+            background-color: #ffffff;
+            padding: 10px 0;
+        }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("كامل سلامة", "Index", "Admins", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("انشاء طلب","Create","Orders", new { area = "" }, new {@style= "color:#fbeed5" })</li>
+                        <li>@Html.ActionLink("المبيعات", "Index", "Orders", new { area = "" }, null)</li>
+                         <li>@Html.ActionLink("الشركات", "Index", "Types", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("المنتجات", "Index", "Products", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("العملاء", "Index", "Users", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("الخدمات", "Index", "Services", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("العروض", "Index", "offers", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("صور التطبيق", "Index", "Photos", new { area = "" }, null)</li>
+                                <li class="dropdown">
+                                                    <a href="#" class="dropdown-toggle hvr-underline-from-center" style="font-size:16px" data-toggle="dropdown"><img src="~/Uploads/Admins/@(User.Identity.Name).jpg" alt="" width="30" height="30" style="border-radius: 50%;" /><b class="fa fa-caret-down"></b></a>
+                                                    <ul class="dropdown-menu agile_short_dropdown">
+                                                        <li class="f" style="font-size:16px">@Html.ActionLink("المديرين", "Index", "Admins")</li>
+                                                        <li class="f" style="font-size:16px">@Html.ActionLink("تسجيل الخروج", "LogOut", "Auth")</li>
+                                                    </ul>
+                                                </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - كامل سلامة</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

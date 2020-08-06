@@ -1,0 +1,49 @@
+﻿@model Salama.Models.Admin
+
+@{
+    ViewBag.Title = "تفاصيل المدير";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تفاصيل المدير</h2>
+
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            الاسم
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            كلمة المرور
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            هل هو قائد ؟
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsManager)
+        </dd>
+        <dt>
+            الصورة
+        </dt>
+        <dd>
+            <img src="~/Uploads/Admins/@(Model.ID).jpg" width="100" height="100" style="border-radius:50%" alt="" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("تعديل", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("العودة لصفحة المديرين", "Index")
+</p>
